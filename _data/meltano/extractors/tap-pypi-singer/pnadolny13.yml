@@ -1,0 +1,16 @@
+description: PyPI Data For Singer Taps/Targets
+label: PyPI Singer
+name: tap-pypi-singer
+logo_url: /assets/logos/extractors/pypi_singer.png
+namespace: tap_pypi_singer
+variant: pnadolny13
+pip_url: git+https://github.com/pnadolny13/tap-pypi-singer.git
+repo: https://github.com/pnadolny13/tap-pypi-singer
+settings: []
+capabilities:
+- catalog
+- discover
+domain_url: https://pepy.tech/
+maintenance_status: unknown
+keywords:
+- api

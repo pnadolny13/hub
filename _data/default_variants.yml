@@ -106,8 +106,8 @@ extractors:
   tap-dash-hudson: gthesheep
   tap-dayforce: goodeggs
   tap-db2: singer-io
-  tap-dbt-artifacts: prratek
   tap-dbt: meltanolabs
+  tap-dbt-artifacts: prratek
   tap-density: envoy
   tap-deputy: singer-io
   tap-domo: mashey
@@ -123,10 +123,10 @@ extractors:
   tap-exchangeratehost: anelendata
   tap-exchangeratesapi: singer-io
   tap-fabdb: dwallace0723
+  tap-facebook: singer-io
   tap-facebook-pages: goes-funky
   tap-facebook-posts: rowanv
   tap-facebook-reviews: packlane
-  tap-facebook: singer-io
   tap-fastly: splitio
   tap-feed: jawats
   tap-five9: pathlight
@@ -136,12 +136,12 @@ extractors:
   tap-frontapp: singer-io
   tap-fulfil: fulfilio
   tap-fullstory: singer-io
-  tap-github-org-projects: rossmcdonald
   tap-github: singer-io
+  tap-github-org-projects: rossmcdonald
   tap-gitlab: meltanolabs
   tap-gleantap: radico
-  tap-gmail-csv: food-spotter
   tap-gmail: mashey
+  tap-gmail-csv: food-spotter
   tap-google-analytics: meltanolabs
   tap-google-search-console: singer-io
   tap-google-sheets: singer-io
@@ -149,8 +149,8 @@ extractors:
   tap-gorgias: brooklyn-data
   tap-grader: reachlocal
   tap-greenhouse: codyss
-  tap-harvest-forecast: singer-io
   tap-harvest: singer-io
+  tap-harvest-forecast: singer-io
   tap-hellobaton: dluftspring
   tap-helpscout: singer-io
   tap-helpshift: pathlight
@@ -239,6 +239,7 @@ extractors:
   tap-prometheus: miroapp
   tap-pubg: autoidm
   tap-purecloud: rumeau
+  tap-pypi-singer: pnadolny13
   tap-quaderno: nickleomartin
   tap-quickbase: singer-io
   tap-quickbooks: hotgluexyz
@@ -314,9 +315,9 @@ extractors:
   tap-trustpilot: fishtown-analytics
   tap-twilio: transferwise
   tap-twinfield: yoast
+  tap-twitter: bernietai
   tap-twitter-ads: dreamdata-io
   tap-twitter-streams: pbegle
-  tap-twitter: bernietai
   tap-typeform: albert-marrero
   tap-typo: typo-ai
   tap-udemy-for-business: immuta
@@ -338,9 +339,9 @@ extractors:
   tap-xero: singer-io
   tap-yotpo: singer-io
   tap-youtube-analytics: singer-io
+  tap-zendesk: twilio-labs
   tap-zendesk-chat: singer-io
   tap-zendesk-sell: leag
-  tap-zendesk: twilio-labs
   tap-zenefits: mashey
   tap-zoom: mashey
   tap-zuora: transferwise
