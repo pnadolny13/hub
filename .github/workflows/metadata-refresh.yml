@@ -23,4 +23,4 @@ jobs:
       run: hub_utils extract-metadata-v2 "${{ steps.get-variants-list.outputs.VARIANTS }}" $(pwd)/extract_data
 
     - name: Translate and Merge
-      run: hub_utils translate "${{ steps.get-variants-list.outputs.VARIANTS }}" $(pwd)/extract_data
+      run: HUB_ROOT_PATH=$(pwd) hub_utils translate "${{ steps.get-variants-list.outputs.VARIANTS }}" $(pwd)/extract_data
