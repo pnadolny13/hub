@@ -20,7 +20,7 @@ jobs:
       run: echo "VARIANTS=$(hub_utils get-variant-names $(pwd))" >> $GITHUB_OUTPUT
 
     - name: Extract Metadata
-      run: variant_list=${{ steps.get-variants-list.outputs.VARIANTS }} hub_utils extract-metadata-v2 "${variant_list}" $(pwd)/extract_data
+      run: hub_utils extract-metadata-v2 "${{ steps.get-variants-list.outputs.VARIANTS }}" $(pwd)/extract_data
 
     - name: Translate and Merge
-      run: variant_list=${{ steps.get-variants-list.outputs.VARIANTS }} hub_utils translate "${variant_list}" $(pwd)/extract_data
+      run: hub_utils translate "${{ steps.get-variants-list.outputs.VARIANTS }}" $(pwd)/extract_data
