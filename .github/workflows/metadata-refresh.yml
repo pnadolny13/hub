@@ -24,3 +24,27 @@ jobs:
 
     - name: Translate and Merge
       run: HUB_ROOT_PATH=$(pwd) hub_utils translate "${{ steps.get-variants-list.outputs.VARIANTS }}" $(pwd)/extract_data
+
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+    - name: Create Pull Request
+      # This runs every time, even if theres failures. If theres no changes it wont open a PR.
+      if: always()
+      uses: peter-evans/create-pull-request@v4
+      with:
+        token: ${{ secrets.PAT }}
+        commit-message: Refresh plugin metadata ${{ steps.date.outputs.date }}
+        committer: GitHub <noreply@github.com>
+        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+        signoff: false
+        branch: hub-bot-metadata-${{ steps.date.outputs.date }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+        delete-branch: true
+        title: '[Hub Bot] Refresh metadata ${{ steps.date.outputs.date }}'
+        body: |
+          Test
+          - testing
+        assignees: pnadolny13
+        reviewers: pnadolny13
+        draft: false
