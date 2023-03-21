@@ -4,47 +4,58 @@ on:
   workflow_dispatch:
 
 jobs:
-  metadata_refresh:
-    name: Metadata Refresh
-
+  extract_airbyte:
     runs-on: ubuntu-latest
-
+    container:
+      image: airbyte/source-s3:latest
     steps:
-    - uses: actions/checkout@v3.3.0
+      - name: Get Airbyte Spec
+        run: $AIRBYTE_ENTRYPOINT spec
 
-    - name: Install hub_utils
-      run: pipx install git+https://github.com/pnadolny13/hub-utils.git@github_action_commands
+  # metadata_refresh:
+  #   name: Metadata Refresh
 
-    - name: Get Variants List
-      id: get-variants-list
-      run: echo "VARIANTS=$(hub_utils get-variant-names $(pwd))" >> $GITHUB_OUTPUT
+  #   runs-on: ubuntu-latest
 
-    - name: Extract Metadata
-      run: hub_utils extract-metadata-v2 "${{ steps.get-variants-list.outputs.VARIANTS }}" $(pwd)/extract_data
+  #   steps:
+  #   - uses: actions/checkout@v3.3.0
 
-    - name: Translate and Merge
-      run: HUB_ROOT_PATH=$(pwd) hub_utils translate "${{ steps.get-variants-list.outputs.VARIANTS }}" $(pwd)/extract_data
+  #   - name: Install hub_utils
+  #     run: pipx install git+https://github.com/pnadolny13/hub-utils.git@github_action_commands
 
-    - name: Get current date
-      id: date
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+  #   - name: Install hub_utils
+  #     run: pipx install git+https://github.com/pnadolny13/hub-utils.git@github_action_commands
 
-    - name: Create Pull Request
-      # This runs every time, even if theres failures. If theres no changes it wont open a PR.
-      if: always()
-      uses: peter-evans/create-pull-request@v4
-      with:
-        token: ${{ secrets.PAT }}
-        commit-message: Refresh plugin metadata ${{ steps.date.outputs.date }}
-        committer: GitHub <noreply@github.com>
-        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-        signoff: false
-        branch: hub-bot-metadata-${{ steps.date.outputs.date }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
-        delete-branch: true
-        title: '[Hub Bot] Refresh metadata ${{ steps.date.outputs.date }}'
-        body: |
-          Test
-          - testing
-        assignees: pnadolny13
-        reviewers: pnadolny13
-        draft: false
+  #   - name: Get Variants List
+  #     id: get-variants-list
+  #     run: echo "VARIANTS=$(hub_utils get-variant-names $(pwd))" >> $GITHUB_OUTPUT
+
+  #   - name: Extract Metadata
+  #     run: hub_utils extract-metadata-v2 "${{ steps.get-variants-list.outputs.VARIANTS }}" $(pwd)/extract_data
+
+  #   - name: Translate and Merge
+  #     run: HUB_ROOT_PATH=$(pwd) hub_utils translate "${{ steps.get-variants-list.outputs.VARIANTS }}" $(pwd)/extract_data
+
+  #   - name: Get current date
+  #     id: date
+  #     run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+  #   - name: Create Pull Request
+  #     # This runs every time, even if theres failures. If theres no changes it wont open a PR.
+  #     if: always()
+  #     uses: peter-evans/create-pull-request@v4
+  #     with:
+  #       token: ${{ secrets.PAT }}
+  #       commit-message: Refresh plugin metadata ${{ steps.date.outputs.date }}
+  #       committer: GitHub <noreply@github.com>
+  #       author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+  #       signoff: false
+  #       branch: hub-bot-metadata-${{ steps.date.outputs.date }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+  #       delete-branch: true
+  #       title: '[Hub Bot] Refresh metadata ${{ steps.date.outputs.date }}'
+  #       body: |
+  #         Test
+  #         - testing
+  #       assignees: pnadolny13
+  #       reviewers: pnadolny13
+  #       draft: false
