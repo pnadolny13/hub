@@ -52,7 +52,6 @@ jobs:
         draft: true
 
   sdk_variants:
-    needs: metadata_refresh_pr
     runs-on: ubuntu-latest
     outputs:
        matrix: ${{ steps.setmatrix.outputs.matrix }}
