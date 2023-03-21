@@ -4,43 +4,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  extract_airbyte:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        source-name: ['source-s3', 'source-kafka']
-    container:
-      image: airbyte/${{ matrix.source-name }}:latest
-    steps:
-      - name: Get Airbyte Spec
-        run: $AIRBYTE_ENTRYPOINT spec > extractor--${{ matrix.source-name }}--airbyte.json
-        id: get-airbyte-stdout
-      - name: Print
-        run: cat extractor--${{ matrix.source-name }}--airbyte.json
+  # extract_airbyte:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       source-name: ['source-s3', 'source-kafka']
+  #   container:
+  #     image: airbyte/${{ matrix.source-name }}:latest
+  #   steps:
+  #     - name: Get Airbyte Spec
+  #       run: $AIRBYTE_ENTRYPOINT spec > extractor--${{ matrix.source-name }}--airbyte.json
+  #       id: get-airbyte-stdout
+  #     - name: Print
+  #       run: cat extractor--${{ matrix.source-name }}--airbyte.json
 
-  # metadata_refresh:
-  #   name: Metadata Refresh
+  # metadata_refresh_pr:
+  #   name: Metadata Refresh PR
 
   #   runs-on: ubuntu-latest
 
   #   steps:
   #   - uses: actions/checkout@v3.3.0
-
-  #   - name: Install hub_utils
-  #     run: pipx install git+https://github.com/pnadolny13/hub-utils.git@github_action_commands
-
-  #   - name: Install hub_utils
-  #     run: pipx install git+https://github.com/pnadolny13/hub-utils.git@github_action_commands
-
-  #   - name: Get Variants List
-  #     id: get-variants-list
-  #     run: echo "VARIANTS=$(hub_utils get-variant-names $(pwd))" >> $GITHUB_OUTPUT
-
-  #   - name: Extract Metadata
-  #     run: hub_utils extract-metadata-v2 "${{ steps.get-variants-list.outputs.VARIANTS }}" $(pwd)/extract_data
-
-  #   - name: Translate and Merge
-  #     run: HUB_ROOT_PATH=$(pwd) hub_utils translate "${{ steps.get-variants-list.outputs.VARIANTS }}" $(pwd)/extract_data
 
   #   - name: Get current date
   #     id: date
@@ -64,4 +48,49 @@ jobs:
   #         - testing
   #       assignees: pnadolny13
   #       reviewers: pnadolny13
-  #       draft: false
+  #       draft: true
+
+  sdk_variants:
+    runs-on: ubuntu-latest
+    outputs:
+       matrix: ${{ steps.setmatrix.outputs.matrix }}
+    steps:
+      - name: Install hub_utils
+        run: pipx install git+https://github.com/pnadolny13/hub-utils.git@github_action_commands
+
+      - name: Get Variants List
+        id: get-variants-list
+        run: echo "VARIANTS=$(hub_utils get-variant-names $(pwd))" >> $GITHUB_OUTPUT
+
+      - name: Set Dynamic Matrix
+        id: setmatrix
+        # ${{ steps.get-variants-list.outputs.VARIANTS }}
+        run: |
+           matrixStringifiedObject="{\"include\":[{\"run\":\"/home/runner/work/hub/hub/_data/meltano/extractors/tap-snowflake/meltanolabs.yml\"},{\"run\":\"/home/runner/work/hub/hub/_data/meltano/extractors/tap-cloudwatch/meltanolabs.yml\"}]}"
+           echo "::set-output name=matrix::$matrixStringifiedObject"
+
+  metadata_refresh:
+    name: Metadata Refresh
+    needs: sdk_variants
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJson(needs.sdk_variants.outputs.matrix) }}
+    steps:
+    - uses: actions/checkout@v3.3.0
+
+    - name: Install hub_utils
+      run: pipx install git+https://github.com/pnadolny13/hub-utils.git@github_action_commands
+
+    # - name: Get Airbyte Spec
+    #   run: $AIRBYTE_ENTRYPOINT spec > extractor--${{ matrix.source-name }}--airbyte.json
+    #   id: get-airbyte-stdout
+
+    # - name: Get Variants List
+    #   id: get-variants-list
+    #   run: echo "VARIANTS=$(hub_utils get-variant-names $(pwd))" >> $GITHUB_OUTPUT
+
+    - name: Extract Metadata
+      run: hub_utils extract-metadata-v2 "${{ matrix.source-name }}" $(pwd)/extract_data
+
+    - name: Translate and Merge
+      run: HUB_ROOT_PATH=$(pwd) hub_utils translate "${{ matrix.source-name }}" $(pwd)/extract_data
