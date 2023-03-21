@@ -6,11 +6,17 @@ on:
 jobs:
   extract_airbyte:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        source-name: ['source-s3', 'source-kafka']
     container:
-      image: airbyte/source-s3:latest
+      image: airbyte/${{ matrix.source-name }}:latest
     steps:
       - name: Get Airbyte Spec
-        run: $AIRBYTE_ENTRYPOINT spec
+        run: $AIRBYTE_ENTRYPOINT spec > extractor--${{ matrix.source-name }}--airbyte.json
+        id: get-airbyte-stdout
+      - name: Print
+        run: cat extractor--${{ matrix.source-name }}--airbyte.json
 
   # metadata_refresh:
   #   name: Metadata Refresh
