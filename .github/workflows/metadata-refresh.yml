@@ -66,8 +66,10 @@ jobs:
       - name: Set Dynamic Matrix
         id: setmatrix
         # ${{ steps.get-variants-list.outputs.VARIANTS }}
+        # matrixStringifiedObject="{\"include\":[{\"source-name\":\"extractors/tap-snowflake/meltanolabs.yml\"},{\"source-name\":\"extractors/tap-cloudwatch/meltanolabs.yml\"}]}"
+
         run: |
-           matrixStringifiedObject="{\"include\":[{\"source-name\":\"extractors/tap-snowflake/meltanolabs.yml\"},{\"source-name\":\"extractors/tap-cloudwatch/meltanolabs.yml\"}]}"
+           matrixStringifiedObject="{\"include\":[{\"source-name\":\"extractors/tap-snowflake/meltanolabs.yml\"}]}"
            echo "::set-output name=matrix::$matrixStringifiedObject"
 
   metadata_refresh:
