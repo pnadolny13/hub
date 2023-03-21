@@ -66,7 +66,7 @@ jobs:
         id: setmatrix
         # ${{ steps.get-variants-list.outputs.VARIANTS }}
         run: |
-           matrixStringifiedObject="{\"include\":[{\"run\":\"/home/runner/work/hub/hub/_data/meltano/extractors/tap-snowflake/meltanolabs.yml\"},{\"run\":\"/home/runner/work/hub/hub/_data/meltano/extractors/tap-cloudwatch/meltanolabs.yml\"}]}"
+           matrixStringifiedObject="{\"include\":[{\"source-name\":\"extractors/tap-snowflake/meltanolabs.yml\"},{\"source-name\":\"extractors/tap-cloudwatch/meltanolabs.yml\"}]}"
            echo "::set-output name=matrix::$matrixStringifiedObject"
 
   metadata_refresh:
@@ -90,7 +90,7 @@ jobs:
     #   run: echo "VARIANTS=$(hub_utils get-variant-names $(pwd))" >> $GITHUB_OUTPUT
 
     - name: Extract Metadata
-      run: hub_utils extract-metadata-v2 "${{ matrix.source-name }}" $(pwd)/extract_data
+      run: hub_utils extract-metadata-v2 "/home/runner/work/hub/hub/_data/meltano/${{ matrix.source-name }}" $(pwd)/extract_data
 
     - name: Translate and Merge
-      run: HUB_ROOT_PATH=$(pwd) hub_utils translate "${{ matrix.source-name }}" $(pwd)/extract_data
+      run: HUB_ROOT_PATH=$(pwd) hub_utils translate "/home/runner/work/hub/hub/_data/meltano/${{ matrix.source-name }}" $(pwd)/extract_data
