@@ -73,6 +73,7 @@ jobs:
 
   metadata_refresh:
     name: Metadata Refresh
+    needs: sdk_variants
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJson(needs.sdk_variants.outputs.matrix) }}
