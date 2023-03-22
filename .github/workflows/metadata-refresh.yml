@@ -84,17 +84,6 @@ jobs:
     - name: Install hub_utils
       run: pipx install git+https://github.com/pnadolny13/hub-utils.git@github_action_commands
 
-    # - name: Get Airbyte Spec
-    #   run: $AIRBYTE_ENTRYPOINT spec > extractor--${{ matrix.source-name }}--airbyte.json
-    #   id: get-airbyte-stdout
-
-    # - name: Get Variants List
-    #   id: get-variants-list
-    #   run: echo "VARIANTS=$(hub_utils get-variant-names $(pwd))" >> $GITHUB_OUTPUT
-
-    - name: Extract Metadata
-      run: hub_utils extract-metadata-v2 "/home/runner/work/hub/hub/_data/meltano/${{ matrix.source-name }}" $(pwd)/extract_data
-
     - name: Translate and Merge
       run: HUB_ROOT_PATH=$(pwd) hub_utils translate "/home/runner/work/hub/hub/_data/meltano/${{ matrix.source-name }}" $(pwd)/extract_data
 
