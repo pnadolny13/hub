@@ -103,6 +103,7 @@ jobs:
       with:
         add: '_data/meltano/*.yml'
         fetch: true
+        push: false
         # push: 'origin hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }} --set-upstream --force'
         # message: 'Hub bot update: ${{ matrix.source-name }}'
         # TODO get this working
