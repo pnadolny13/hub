@@ -105,4 +105,14 @@ jobs:
         fetch: true
         # push: 'origin hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }} --set-upstream --force'
         # message: 'Hub bot update: ${{ matrix.source-name }}'
+        # TODO get this working
         new_branch: hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+
+    - name: Git Log
+      run: git status
+
+    - name: Git Log 2
+      run: git log
+
+    - name: Git Log 3
+      run: git checkout hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }} && git push origin
