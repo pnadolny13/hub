@@ -110,19 +110,30 @@ jobs:
     #     new_branch: hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
 
     - name: Git Log
-      run: git checkout -b hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+      run: |
+        git config --global user.name "pnadolny13"
+        git config --global user.email "patnadolny@gmail.com"
 
-    - name: Git Log
-      run: git status
+        git checkout -b hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+        git add _data/meltano/*.yml
+        git commit -m "testing CI commit manually"
+        git status
+        git push --set-upstream origin hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
 
-    - name: Git Add
-      run: git add _data/meltano/*.yml
+    # - name: Git Log
+    #   run: git checkout -b hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
 
-    - name: Git Add
-      run: git commit -m "testing CI commit manually"
+    # - name: Git Log
+    #   run: git status
 
-    - name: Git Log 2
-      run: git log
+    # - name: Git Add
+    #   run: git add _data/meltano/*.yml
 
-    - name: Git Log 3
-      run: git push --set-upstream origin hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+    # - name: Git Add
+    #   run: git commit -m "testing CI commit manually"
+
+    # - name: Git Log 2
+    #   run: git log
+
+    # - name: Git Log 3
+    #   run: git push --set-upstream origin hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
