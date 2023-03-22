@@ -98,19 +98,22 @@ jobs:
     - name: Translate and Merge
       run: HUB_ROOT_PATH=$(pwd) hub_utils translate "/home/runner/work/hub/hub/_data/meltano/${{ matrix.source-name }}" $(pwd)/extract_data
 
-    - name: Commit changes
-      uses: EndBug/add-and-commit@v9
-      with:
-        add: '_data/meltano/*.yml'
-        fetch: true
-        push: false
-        # push: 'origin hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }} --set-upstream --force'
-        # message: 'Hub bot update: ${{ matrix.source-name }}'
-        # TODO get this working
-        new_branch: hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+    # - name: Commit changes
+    #   uses: EndBug/add-and-commit@v9
+    #   with:
+    #     add: '_data/meltano/*.yml'
+    #     fetch: true
+    #     push: false
+    #     # push: 'origin hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }} --set-upstream --force'
+    #     # message: 'Hub bot update: ${{ matrix.source-name }}'
+    #     # TODO get this working
+    #     new_branch: hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
 
     - name: Git Log
       run: git status
+
+    - name: Git Add
+      run: git add _data/meltano/*.yml
 
     - name: Git Log 2
       run: git log
