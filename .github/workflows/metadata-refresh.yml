@@ -110,13 +110,19 @@ jobs:
     #     new_branch: hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
 
     - name: Git Log
+      run: git checkout -b hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+
+    - name: Git Log
       run: git status
 
     - name: Git Add
       run: git add _data/meltano/*.yml
 
+    - name: Git Add
+      run: git commit -m "testing CI commit manually"
+
     - name: Git Log 2
       run: git log
 
     - name: Git Log 3
-      run: git checkout hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }} && git push --set-upstream origin hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+      run: git push --set-upstream origin hub-bot-metadata-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
