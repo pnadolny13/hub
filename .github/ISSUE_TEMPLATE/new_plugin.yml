@@ -57,15 +57,18 @@ body:
     description: |
       Upload a logo image for the new plugin. The ideal image is an SVG or PNG, has no text over the logo, and has a transparent background.
 
+      Sometimes and image already exists, for example if an extractor is listed on the MeltanoHub and you want to add a loader.
+      In that case, you can leave a note of what existing plugin to use.
+
       Tip: You can attach images by clicking this area to highlight it and then dragging files in.
   validations:
     required: false
 
 - type: textarea
   attributes:
-    label: Anything else?
+    label: Any other notes?
     description: |
-      Links? References? Anything that will give us more context about the issue you are encountering!
+      Links? References? Anything that will give us more context. 
 
   validations:
     required: false
