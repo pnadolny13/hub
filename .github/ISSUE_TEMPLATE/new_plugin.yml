@@ -10,7 +10,10 @@ body:
     value: |
       ## New Plugin Request
 
-      **Please fill out the following information to request a new plugin to be added to the Meltano Hub.**
+      Please fill out the following information to request a new plugin to be added to the Meltano Hub.
+      
+      If you'd like you can follow the steps in the [CONTRIBUTING.md](./CONTRIBUTING.md) to add it yourself,
+      otherwise someone on the Meltano team will get it added.
 
 - type: dropdown
   id: plugin_type
