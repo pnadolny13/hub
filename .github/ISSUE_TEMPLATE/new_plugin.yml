@@ -1,0 +1,71 @@
+name: 🚰 New Plugin
+description: Request a new Plugin to Meltano Hub
+title: "Add Plugin: <insert plugin name>"
+labels: []
+assignees: [taylormurphy, pnadolny13]
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      ## New Plugin Request
+
+      **Please fill out the following information to request a new plugin to be added to the Meltano Hub.**
+
+- type: dropdown
+  id: plugin_type
+  attributes:
+    label: What is the plugin type?
+    multiple: true
+    options:
+      - extractor
+      - loader
+      - utility
+      - mapper
+      - files
+
+- type: input
+  id: name
+  attributes:
+    label: Repository URL
+    description: The URL for the repository that contains the plugin code
+    placeholder: ex. https://github.com/MeltanoLabs/tap-github
+  validations:
+    required: true
+
+- type: input
+  id: description
+  attributes:
+    label: Description
+    description: General description of what the company behind the API or database does
+    placeholder: ex. Online Marketing Platform
+  validations:
+    required: true
+
+- type: input
+  id: url
+  attributes:
+    label: Domain URL
+    description: URL of the developer documentation or website
+    placeholder: ex. https://developers.hubspot.com/docs/api/overview
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: Logo Image
+    description: |
+      Upload a logo image for the new plugin. The ideal image is an SVG or PNG, has no text over the logo, and has a transparent background.
+
+      Tip: You can attach images by clicking this area to highlight it and then dragging files in.
+  validations:
+    required: false
+
+- type: textarea
+  attributes:
+    label: Anything else?
+    description: |
+      Links? References? Anything that will give us more context about the issue you are encountering!
+
+  validations:
+    required: false
